@@ -23,6 +23,24 @@ const FEATURE_OPTIONS = [
 	{ name: 'OCR High Resolution', value: 'ocrHighResolution' },
 ] as const;
 
+function removePolygons(obj: unknown): unknown {
+	if (obj === null || obj === undefined) {
+		return obj;
+	}
+	if (Array.isArray(obj)) {
+		return obj.map(removePolygons);
+	}
+	if (typeof obj === 'object') {
+		const result: Record<string, unknown> = {};
+		for (const [key, value] of Object.entries(obj)) {
+			if (key === 'polygon') continue;
+			result[key] = removePolygons(value);
+		}
+		return result;
+	}
+	return obj;
+}
+
 export class AzureDocumentIntelligence implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Azure Document Intelligence',
@@ -156,6 +174,14 @@ export class AzureDocumentIntelligence implements INodeType {
 						description: 'Comma-separated field labels for custom extraction (requires queryFields feature)',
 					},
 					{
+						displayName: 'Remove Polygons',
+						name: 'removePolygons',
+						type: 'boolean',
+						default: false,
+						description:
+							'Whether to remove polygon coordinate arrays (bounding boxes) from the output to reduce clutter',
+					},
+					{
 						displayName: 'Split Documents',
 						name: 'splitDocuments',
 						type: 'boolean',
@@ -217,6 +243,7 @@ export class AzureDocumentIntelligence implements INodeType {
 					(additionalOptions.outputContentFormat as 'text' | 'markdown') ||
 					'text';
 				const pollingInterval = (additionalOptions.pollingInterval as number) || 1000;
+				const removePolygonsOption = additionalOptions.removePolygons as boolean;
 				const splitDocuments =
 					modelType === 'classifier' &&
 					(additionalOptions.splitDocuments as boolean);
@@ -304,10 +331,13 @@ export class AzureDocumentIntelligence implements INodeType {
 				}
 
 				const documents = analyzeResult.documents || [];
+				const processOutput = (data: IDataObject): IDataObject =>
+					removePolygonsOption ? (removePolygons(data) as IDataObject) : data;
 
 				if (outputMode === 'raw') {
+					const json = result as unknown as IDataObject;
 					returnData.push({
-						json: result as unknown as IDataObject,
+						json: processOutput(json),
 						pairedItem: { item: itemIndex },
 					});
 				} else if (outputMode === 'oneItemPerDocument' && documents.length > 1) {
@@ -319,7 +349,7 @@ export class AzureDocumentIntelligence implements INodeType {
 							document: doc as unknown as IDataObject,
 						};
 						returnData.push({
-							json: simplified,
+							json: processOutput(simplified),
 							pairedItem: { item: itemIndex },
 						});
 					}
@@ -334,7 +364,7 @@ export class AzureDocumentIntelligence implements INodeType {
 						simplified.document = firstDoc as unknown as IDataObject;
 					}
 					returnData.push({
-						json: simplified,
+						json: processOutput(simplified),
 						pairedItem: { item: itemIndex },
 					});
 				}
