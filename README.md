@@ -1,4 +1,4 @@
-#  n8n-nodes-noopa
+# n8n-nodes-noopa
 
 This is an n8n community node package. It provides nodes for Azure Document Intelligence and other integrations.
 
