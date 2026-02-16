@@ -26,7 +26,7 @@ export class AzureDocumentIntelligenceApi implements ICredentialType {
 			default: '',
 			placeholder: 'https://your-resource.cognitiveservices.azure.com',
 			description:
-				'Your Azure Document Intelligence resource endpoint (without trailing slash)',
+				'Your Azure Document Intelligence resource endpoint from the portal (Keys and Endpoint section). Do not include a trailing slash. Example: https://myresource.cognitiveservices.azure.com',
 		},
 		{
 			displayName: 'API Key',
@@ -51,7 +51,7 @@ export class AzureDocumentIntelligenceApi implements ICredentialType {
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: '={{$credentials.endpoint}}/documentintelligence',
-			url: '/info',
+			url: '/info?api-version=2024-11-30',
 		},
 	};
 }
