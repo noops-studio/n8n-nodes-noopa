@@ -1,11 +1,16 @@
 {
   "name": "n8n-nodes-noopa",
-  "version": "0.1.0",
+  "version": "0.2.0-0",
   "description": "n8n nodes for Azure Document Intelligence and other integrations",
   "license": "MIT",
   "homepage": "",
-  "keywords": ["n8n-community-node-package"],
-  "author": { "name": "beery", "email": "beeryba05@gmail.com" },
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "author": {
+    "name": "beery",
+    "email": "beeryba05@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/noops-studio/n8n-nodes-noopa"
@@ -19,7 +24,9 @@
     "release": "n8n-node release",
     "prepublishOnly": "n8n-node prerelease"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "n8n": {
     "n8nNodesApiVersion": 1,
     "strict": false,
@@ -42,5 +49,7 @@
     "@azure-rest/ai-document-intelligence": "^1.1.0",
     "@azure/core-auth": "^1.6.0"
   },
-  "peerDependencies": { "n8n-workflow": "*" }
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
 }
