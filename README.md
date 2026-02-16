@@ -1,46 +1,55 @@
 # n8n-nodes-noopa
 
-This is an n8n community node. It lets you use _app/service name_ in your n8n workflows.
-
-_App/service name_ is _one or two sentences describing the service this node integrates with_.
+This is an n8n community node package. It provides nodes for Azure Document Intelligence and other integrations.
 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
-[Installation](#installation)
-[Operations](#operations)
-[Credentials](#credentials)
-[Compatibility](#compatibility)
-[Usage](#usage)
-[Resources](#resources)
-[Version history](#version-history)
+## Nodes
+
+### Azure Document Intelligence
+
+Analyze documents using Azure Document Intelligence (formerly Form Recognizer). Extract text, layout, tables, key-value pairs, and structured data from PDFs, images, and Office documents.
+
+**Operations:**
+- Analyze documents from binary data or URL
+- Support for prebuilt models (layout, invoice, read) and custom models
+- Document classification with optional document splitting
+- Output modes: raw JSON, simplified (content, key-value pairs, tables), or one item per document
 
 ## Installation
 
 Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-## Operations
-
-_List the operations supported by your node._
-
 ## Credentials
 
-_If users need to authenticate with the app/service, provide details here. You should include prerequisites (such as signing up with the service), available authentication methods, and how to set them up._
+### Azure Document Intelligence API
+
+The Azure Document Intelligence node requires:
+
+1. **Endpoint**: Your Azure Document Intelligence resource URL (e.g. `https://your-resource.cognitiveservices.azure.com`)
+2. **API Key**: Ocp-Apim-Subscription-Key from the Azure portal (Keys and Endpoint section)
+
+**Prerequisites:**
+- An [Azure subscription](https://azure.microsoft.com/free/)
+- A [Document Intelligence](https://portal.azure.com/#create/Microsoft.CognitiveServicesFormRecognizer) resource
 
 ## Compatibility
 
-_State the minimum n8n version, as well as which versions you test against. You can also include any known version incompatibility issues._
+- Minimum n8n version: 1.0
+- Tested with n8n 1.x
+
+**Note:** This package uses `@azure-rest/ai-document-intelligence` and is not verified for n8n Cloud. For self-hosted n8n, it works out of the box.
 
 ## Usage
 
-_This is an optional section. Use it to help users with any difficult or confusing aspects of the node._
-
-_By the time users are looking for community nodes, they probably already know n8n basics. But if you expect new users, you can link to the [Try it out](https://docs.n8n.io/try-it-out/) documentation to help them get started._
+1. Add the Azure Document Intelligence node to your workflow
+2. Create or select Azure Document Intelligence credentials
+3. Choose document input: binary data (from a previous node) or document URL
+4. Select the model (e.g. `prebuilt-layout`, `prebuilt-invoice`, `prebuilt-read`)
+5. Configure optional settings: pages, locale, features, query fields, output format
+6. Run the workflow
 
 ## Resources
 
 * [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
-* _Link to app/service documentation._
-
-## Version history
-
-_This is another optional section. If your node has multiple versions, include a short description of available versions and what changed, as well as any compatibility impact._
+* [Azure Document Intelligence documentation](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/)

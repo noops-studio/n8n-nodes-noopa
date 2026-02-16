@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-noopa",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Artificial Intelligence", "Microsoft"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/overview"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/"
+			}
+		]
+	}
+}
